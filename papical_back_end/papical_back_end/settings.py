@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'papical_back_end'
+    'papical_back_end',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
