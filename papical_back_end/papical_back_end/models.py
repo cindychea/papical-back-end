@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.contrib.gis.db.models import PointField
-from datetime import datetime, timedelta
+# from datetime import datetime, timedelta
 from taggit.managers import TaggableManager
 
 
@@ -22,6 +22,7 @@ class User(AbstractUser):
 
   def __str__(self):
     return f'{self.first_name} {self.last_name}'
+
 
 class Hangout(models.Model):
   name = models.CharField(max_length=255)

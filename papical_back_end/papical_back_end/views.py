@@ -2,7 +2,8 @@ from rest_framework import generics, permissions
 from papical_back_end.models import User, Hangout, Invitation
 from taggit_serializer.serializers import TaggitSerializer
 from taggit.models import Tag
-from papical_back_end.serializers import UserSerializer, HangoutSerializer, InvitationSerializer, TagSerializer
+from friendship.models import Friend
+from papical_back_end.serializers import UserSerializer, HangoutSerializer, InvitationSerializer, TagSerializer, FriendSerializer
 
 class UserList(generics.ListAPIView):
   queryset = User.objects.all()
@@ -49,4 +50,14 @@ class TagList(generics.ListCreateAPIView):
 class TagDetail(generics.RetrieveUpdateDestroyAPIView):
   queryset = Tag.objects.all()
   serializer_class = TagSerializer
+  permission_classes = (permissions.IsAuthenticated,)
+
+class FriendList(generics.ListCreateAPIView):
+  queryset = Friend.objects.all()
+  serializer_class = FriendSerializer
+  permission_classes = (permissions.IsAuthenticated,)
+
+class FriendDetail(generics.RetrieveUpdateDestroyAPIView):
+  queryset = Friend.objects.all()
+  serializer_class = FriendSerializer
   permission_classes = (permissions.IsAuthenticated,)
