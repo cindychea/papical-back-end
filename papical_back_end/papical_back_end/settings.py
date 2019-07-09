@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'papical_back_end',
     'rest_framework',
     'taggit',
+    'taggit_serializer',
 ]
 
 MIDDLEWARE = [
