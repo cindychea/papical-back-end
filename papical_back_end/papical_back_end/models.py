@@ -18,16 +18,23 @@ class User(AbstractUser):
   date_of_birth = models.DateField(null=True, blank=True)
   gender = models.CharField(max_length=2, choices=GENDER_CHOICES)
   location = PointField(null=True, blank=True)
+  tag = TaggableManager(verbose_name="Interests", help_text="Separate each interest with a comma.", blank=True)
 
+  def __str__(self):
+    return f'{self.first_name} {self.last_name}'
 
-class Event(models.Model):
+class Hangout(models.Model):
   name = models.CharField(max_length=255)
+  date = models.DateField()
   start_time = models.TimeField()
   end_time = models.TimeField()
   description = models.TextField(null=True)
-  creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_events')
+  creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_hangouts')
   location = PointField(null=True, blank=True)
-  tag = TaggableManager(verbose_name="Tags", help_text="Separate each Tag with a comma.", blank=True)
+  tag = TaggableManager(verbose_name="Tags", help_text="Separate each tag with a comma.", blank=True)
+
+  def __str__(self):
+    return f'{self.name}: {self.description}'
 
   def participants(self):
     return self.invitations.filter(lambda invitation: invitation.attending)
@@ -41,12 +48,8 @@ class Invitation(models.Model):
   ]
 
   invitee = models.ForeignKey(User, on_delete=models.CASCADE, related_name='invitations')
-  event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='invitations')
+  hangout = models.ForeignKey(Hangout, on_delete=models.CASCADE, related_name='invitations')
   attending = models.CharField(max_length=2, choices=INVITE_CHOICES, default='NA')
 
-
-# Effectively the Tag pattern. Might try using a library here...
-class Interest(models.Model):
-  user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='interests')
-  interest = TaggableManager(verbose_name="Interests", help_text="Separate each interest with a comma.", blank=True)
-
+  def __str__(self):
+    return f'{self.invitee} has been invited to {self.hangout}'
