@@ -47,7 +47,8 @@ class Invitation(models.Model):
     ('NA', 'Not Attending'),
   ]
 
-  invitee = models.ForeignKey(User, on_delete=models.CASCADE, related_name='invitations')
+  creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_invitations')
+  invitee = models.ForeignKey(User, on_delete=models.CASCADE, related_name='received_invitations')
   hangout = models.ForeignKey(Hangout, on_delete=models.CASCADE, related_name='invitations')
   attending = models.CharField(max_length=2, choices=INVITE_CHOICES, default='NA')
 

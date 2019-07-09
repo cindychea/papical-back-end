@@ -5,7 +5,7 @@ from taggit_serializer.serializers import TagListSerializerField, TaggitSerializ
 
 
 class UserSerializer(TaggitSerializer, serializers.ModelSerializer):
-  
+
   tag = TagListSerializerField()
 
   class Meta:
@@ -14,8 +14,9 @@ class UserSerializer(TaggitSerializer, serializers.ModelSerializer):
 
 
 class HangoutSerializer(TaggitSerializer, serializers.ModelSerializer):
-  
+
   tag = TagListSerializerField()
+  creator = serializers.ReadOnlyField(source='creator.username')
 
   class Meta:
     model = Hangout
@@ -24,9 +25,11 @@ class HangoutSerializer(TaggitSerializer, serializers.ModelSerializer):
 
 class InvitationSerializer(serializers.ModelSerializer):
 
+  creator = serializers.ReadOnlyField(source='creator.username')
+
   class Meta:
     model = Invitation
-    fields = ('pk', 'invitee', 'hangout', 'attending')
+    fields = ('pk', 'creator', 'invitee', 'hangout', 'attending')
 
 class TagSerializer(serializers.ModelSerializer):
 
