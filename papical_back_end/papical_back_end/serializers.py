@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from papical_back_end.models import User, Hangout, Invitation
-from taggit_serializer.serializers import (TagListSerializerField, TaggitSerializer)
+from taggit.models import Tag
+from taggit_serializer.serializers import TagListSerializerField, TaggitSerializer
+
 
 class UserSerializer(TaggitSerializer, serializers.ModelSerializer):
   
@@ -25,3 +27,11 @@ class InvitationSerializer(serializers.ModelSerializer):
   class Meta:
     model = Invitation
     fields = ('pk', 'invitee', 'hangout', 'attending')
+
+class TagSerializer(serializers.ModelSerializer):
+
+  # tag = TagListSerializerField()
+
+  class Meta:
+    model = Tag
+    fields = ('pk', 'name', 'slug')

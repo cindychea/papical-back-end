@@ -26,6 +26,8 @@ urlpatterns = [
     path('hangouts/<int:pk>/', views.HangoutDetail.as_view()),
     path('invitations/', views.InvitationList.as_view()),
     path('invitations/<int:pk>/', views.InvitationDetail.as_view()),
+    path('tags/', views.TagList.as_view()),
+    path('tags/<int:pk>/', views.TagDetail.as_view()),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
