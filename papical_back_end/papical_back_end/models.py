@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.contrib.gis.db.models import PointField
 from datetime import datetime, timedelta
+from taggit.managers import TaggableManager
 
 
 class User(AbstractUser):
@@ -14,7 +15,6 @@ class User(AbstractUser):
   ]
 
   email = models.EmailField(unique=True)
-  location = models.CharField(max_length=30)
   date_of_birth = models.DateField(null=True, blank=True)
   gender = models.CharField(max_length=2, choices=GENDER_CHOICES)
   location = PointField(null=True, blank=True)
@@ -27,6 +27,7 @@ class Event(models.Model):
   description = models.TextField(null=True)
   creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_events')
   location = PointField(null=True, blank=True)
+  tag = TaggableManager(verbose_name="Tags", help_text="Separate each Tag with a comma.", blank=True)
 
   def participants(self):
     return self.invitations.filter(lambda invitation: invitation.attending)
@@ -46,9 +47,6 @@ class Invitation(models.Model):
 
 # Effectively the Tag pattern. Might try using a library here...
 class Interest(models.Model):
-  name = models.CharField(max_length=255)
   user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='interests')
-  event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='interests')
-  # Effectively "Tags"
-  # manytomany (ForeignKey of event)
-  # manytomany (ForeignKey of user)
+  interest = TaggableManager(verbose_name="Interests", help_text="Separate each interest with a comma.", blank=True)
+
