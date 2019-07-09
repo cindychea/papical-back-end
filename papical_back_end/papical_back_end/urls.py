@@ -30,6 +30,8 @@ urlpatterns = [
     path('invitations/<int:pk>/', views.InvitationDetail.as_view()),
     path('tags/', views.TagList.as_view()),
     path('tags/<int:pk>/', views.TagDetail.as_view()),
+    path('friends/', views.FriendList.as_view()),
+    path('friends/<int:pk>/', views.FriendDetail.as_view()),
     path('api/token/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
 ]
