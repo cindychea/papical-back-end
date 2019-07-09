@@ -1,6 +1,8 @@
 from rest_framework import generics
 from papical_back_end.models import User, Hangout, Invitation
-from papical_back_end.serializers import UserSerializer, HangoutSerializer, InvitationSerializer
+from taggit_serializer.serializers import TaggitSerializer
+from taggit.models import Tag
+from papical_back_end.serializers import UserSerializer, HangoutSerializer, InvitationSerializer, TagSerializer
 
 class UserList(generics.ListCreateAPIView):
   queryset = User.objects.all()
@@ -27,3 +29,12 @@ class InvitationList(generics.ListCreateAPIView):
 class InvitationDetail(generics.RetrieveUpdateDestroyAPIView):
   queryset = Invitation.objects.all()
   serializer_class = InvitationSerializer
+
+
+class TagList(generics.ListCreateAPIView):
+  queryset = Tag.objects.all()
+  serializer_class = TagSerializer
+
+class TagDetail(generics.RetrieveUpdateDestroyAPIView):
+  queryset = Tag.objects.all()
+  serializer_class = TagSerializer
