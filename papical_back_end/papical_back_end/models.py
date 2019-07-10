@@ -19,6 +19,7 @@ class User(AbstractUser):
   gender = models.CharField(max_length=2, choices=GENDER_CHOICES)
   location = PointField(null=True, blank=True)
   tag = TaggableManager(verbose_name="Interests", help_text="Separate each interest with a comma.", blank=True)
+  picture = models.ImageField(upload_to='images/', null=True)
 
   def __str__(self):
     return f'{self.first_name} {self.last_name}'

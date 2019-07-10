@@ -11,7 +11,7 @@ class UserSerializer(TaggitSerializer, serializers.ModelSerializer):
 
   class Meta:
     model = User
-    fields = ('pk', 'username', 'first_name', 'last_name', 'email', 'date_of_birth', 'gender', 'location', 'tag')
+    fields = ('pk', 'username', 'first_name', 'last_name', 'email', 'date_of_birth', 'gender', 'location', 'tag', 'picture')
 
 
 class HangoutSerializer(TaggitSerializer, serializers.ModelSerializer):
