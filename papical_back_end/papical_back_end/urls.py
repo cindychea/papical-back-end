@@ -15,25 +15,31 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
-from rest_framework.urlpatterns import format_suffix_patterns
+
+from rest_framework import routers
+# from rest_framework.urlpatterns import format_suffix_patterns
+
 from rest_framework_simplejwt import views as jwt_views
+
 from papical_back_end import views
 
+
+router = routers.DefaultRouter()
+router.register(r'users', views.UserViewSet)
+router.register(r'hangouts', views.HangoutViewSet)
+router.register(r'freetimes', views.FreeTimeViewSet)
+router.register(r'invitations', views.InvitationViewSet)
+router.register(r'tags', views.TagViewSet)
+router.register(r'friends', views.FriendViewSet)
+
+
+
 urlpatterns = [
+    path('', include(router.urls)),
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
-    path('users/', views.UserList.as_view()),
-    path('users/<int:pk>/', views.UserDetail.as_view()),
-    path('hangouts/', views.HangoutList.as_view()),
-    path('hangouts/<int:pk>/', views.HangoutDetail.as_view()),
-    path('invitations/', views.InvitationList.as_view()),
-    path('invitations/<int:pk>/', views.InvitationDetail.as_view()),
-    path('tags/', views.TagList.as_view()),
-    path('tags/<int:pk>/', views.TagDetail.as_view()),
-    path('friends/', views.FriendList.as_view()),
-    path('friends/<int:pk>/', views.FriendDetail.as_view()),
     path('login/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
 ]
 
-urlpatterns = format_suffix_patterns(urlpatterns)
+# urlpatterns = format_suffix_patterns(urlpatterns)
