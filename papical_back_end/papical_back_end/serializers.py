@@ -19,11 +19,19 @@ class HangoutSerializer(TaggitSerializer, serializers.ModelSerializer):
   tag = TagListSerializerField()
   creator = serializers.ReadOnlyField(source='creator.username')
 
+  def perform_create(self, serializer):
+    serializer.save(creator=self.request.user)
+
   class Meta:
     model = Hangout
     fields = ('pk', 'name', 'date', 'start_time', 'end_time', 'description', 'creator', 'location', 'tag')
 
 class FreeTimeSerializer(serializers.ModelSerializer):
+
+  creator = serializers.ReadOnlyField(source='creator.username')
+
+  def perform_create(self, serializer):
+    serializer.save(creator=self.request.user)
 
   class Meta:
     model = FreeTime
@@ -32,6 +40,9 @@ class FreeTimeSerializer(serializers.ModelSerializer):
 class InvitationSerializer(serializers.ModelSerializer):
 
   creator = serializers.ReadOnlyField(source='creator.username')
+
+  def perform_create(self, serializer):
+    serializer.save(creator=self.request.user)
 
   class Meta:
     model = Invitation

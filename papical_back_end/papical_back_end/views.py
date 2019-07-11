@@ -1,6 +1,7 @@
 from django.http import JsonResponse
 from django.contrib.auth import get_user_model
 from rest_framework import generics, permissions, viewsets
+from papical_back_end.permissions import *
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from papical_back_end.models import User, Hangout, FreeTime, Invitation
@@ -39,7 +40,7 @@ class UserViewSet(viewsets.ModelViewSet):
 class HangoutViewSet(viewsets.ModelViewSet):
   serializer_class = HangoutSerializer
   queryset = Hangout.objects.all()
-  permission_classes = (permissions.IsAuthenticated,)
+  permission_classes = (permissions.IsAuthenticated, )
   
   # def list(self, request):
   #   # List
@@ -143,7 +144,7 @@ class TagViewSet(viewsets.ModelViewSet):
   #   pass
 
 
-
+# Rework FriendViewSet with more generic ViewSet to allow for alignment with library
 class FriendViewSet(viewsets.ModelViewSet):
   serializer_class = FriendSerializer
   queryset = Friend.objects.all()
@@ -168,6 +169,10 @@ class FriendViewSet(viewsets.ModelViewSet):
   #   pass
 
   # def destroy(self, request, pk=None):
+  #   add request params
+  #   https://github.com/revsys/django-friendship#to-remove-the-friendship-relationship-between-requestuser-and-other_user-do-the-following
+  #   pass
+  #   pass
   #   Friend.objects.remove_friend(request.user, to_user)
 
   #   return Response({'status': 'Request deleted'}, status=200)
