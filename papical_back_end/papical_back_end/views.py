@@ -1,9 +1,10 @@
 from rest_framework import generics, permissions, viewsets
-from papical_back_end.models import User, Hangout, FreeTime, Invitation
 from taggit_serializer.serializers import TaggitSerializer
 from taggit.models import Tag
 from friendship.models import Friend
+from papical_back_end.models import User, Hangout, FreeTime, Invitation
 from papical_back_end.serializers import UserSerializer, HangoutSerializer, FreeTimeSerializer, InvitationSerializer, TagSerializer, FriendSerializer
+from papical_back_end.permissions import *
 
 class UserViewSet(viewsets.ModelViewSet):
   serializer_class = UserSerializer
@@ -35,7 +36,7 @@ class UserViewSet(viewsets.ModelViewSet):
 class HangoutViewSet(viewsets.ModelViewSet):
   serializer_class = HangoutSerializer
   queryset = Hangout.objects.all()
-  permission_classes = (permissions.IsAuthenticated,)
+  permission_classes = (permissions.IsAuthenticated, )
   
   # def list(self, request):
   #   # List
@@ -139,7 +140,7 @@ class TagViewSet(viewsets.ModelViewSet):
   #   pass
 
 
-
+# Rework FriendViewSet with more generic ViewSet to allow for alignment with library
 class FriendViewSet(viewsets.ModelViewSet):
   serializer_class = FriendSerializer
   queryset = Friend.objects.all()
@@ -163,4 +164,7 @@ class FriendViewSet(viewsets.ModelViewSet):
   #   pass
 
   # def destroy(self, request, pk=None):
+  #   add request params
+  #   https://github.com/revsys/django-friendship#to-remove-the-friendship-relationship-between-requestuser-and-other_user-do-the-following
+  #   pass
   #   pass
