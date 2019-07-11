@@ -31,6 +31,7 @@ router.register(r'freetimes', views.FreeTimeViewSet)
 router.register(r'invitations', views.InvitationViewSet)
 router.register(r'tags', views.TagViewSet)
 router.register(r'friends', views.FriendViewSet)
+router.register(r'requests', views.FriendRequestViewSet)
 
 
 
@@ -38,8 +39,8 @@ urlpatterns = [
     path('', include(router.urls)),
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
-    path('login/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
+    # path('login/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    # path('refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
 ]
 
 # urlpatterns = format_suffix_patterns(urlpatterns)
