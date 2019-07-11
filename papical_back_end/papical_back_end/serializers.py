@@ -2,7 +2,7 @@ from rest_framework import serializers
 from papical_back_end.models import User, Hangout, FreeTime, Invitation
 from taggit.models import Tag
 from taggit_serializer.serializers import TagListSerializerField, TaggitSerializer
-from friendship.models import Friend
+from friendship.models import Friend, FriendshipRequest
 
 
 class UserSerializer(TaggitSerializer, serializers.ModelSerializer):
@@ -59,3 +59,10 @@ class FriendSerializer(serializers.ModelSerializer):
   class Meta:
     model = Friend
     fields = ('pk', 'to_user', 'from_user', 'created')
+
+class FriendshipRequestSerializer(serializers.ModelSerializer):
+
+  class Meta:
+    model = FriendshipRequest
+    fields = ('pk', 'from_user', 'to_user', 'message', 'created', 'rejected', 'viewed')
+
