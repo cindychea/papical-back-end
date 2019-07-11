@@ -10,6 +10,9 @@ from taggit.models import Tag
 from friendship.models import Friend, FriendshipRequest
 from papical_back_end.serializers import UserSerializer, HangoutSerializer, FreeTimeSerializer, InvitationSerializer, TagSerializer, FriendSerializer, FriendshipRequestSerializer
 
+from django.db.models import Q
+
+
 class UserViewSet(viewsets.ModelViewSet):
   serializer_class = UserSerializer
   queryset = User.objects.all()
@@ -148,34 +151,17 @@ class TagViewSet(viewsets.ModelViewSet):
 class FriendViewSet(viewsets.ModelViewSet):
   serializer_class = FriendSerializer
   queryset = Friend.objects.all()
-  permission_classes = (permissions.IsAuthenticated,)
+  permission_classes = (permissions.IsAuthenticated, )
   
-  # def list(self, request):
-  #   queryset = Friend.objects.select_related("from_user", "to_user").filter(to_user=request.user).all()
-  #   serializer = FriendSerializer(queryset, many=True)
-  #   return Response(serializer.data)
+  def list(self, request):
+    queryset = Friend.objects.filter(Q(from_user=request.user) | Q(to_user=request.user)).all()
+    serializer = FriendSerializer(queryset, many=True)
+    return Response(serializer.data)
 
-  # def create(self, request):
-  #   pass
-
-  # def retrieve(self, request, pk=None):
-  #   # Detail
-  #   pass
-
-  # def update(self, request, pk=None):
-  #   pass
-
-  # def partial_update(self, request, pk=None):
-  #   pass
-
-  # def destroy(self, request, pk=None):
-  #   add request params
-  #   https://github.com/revsys/django-friendship#to-remove-the-friendship-relationship-between-requestuser-and-other_user-do-the-following
-  #   pass
-  #   pass
-  #   Friend.objects.remove_friend(request.user, to_user)
-
-  #   return Response({'status': 'Request deleted'}, status=200)
+  def destroy(self, request, pk=None):
+    friendship = Friend.objects.get(pk=pk)
+    friendship.delete()
+    return Response({'status': 'Request deleted'}, status=200)
 
 
 class FriendRequestViewSet(viewsets.ModelViewSet):
@@ -184,7 +170,7 @@ class FriendRequestViewSet(viewsets.ModelViewSet):
   permission_classes = (permissions.IsAuthenticated, )
 
   def list(self, request):
-    queryset = FriendshipRequest.objects.select_related("from_user", "to_user").filter(to_user=request.user).all()
+    queryset = FriendshipRequest.objects.filter(Q(from_user=request.user) | Q(to_user=request.user)).all()
     serializer = FriendshipRequestSerializer(queryset, many=True)
     return Response(serializer.data)
 
@@ -221,39 +207,3 @@ class FriendRequestViewSet(viewsets.ModelViewSet):
     friendship = FriendshipRequest.objects.get(pk=pk)
     friendship.cancel()
     return Response({'status': 'Request deleted'}, status=200)
-
-
-
-
-
-
-
-
-
-
-
-
-  # def list(self, request):
-  #   queryset = Friend.objects.all()
-  #   serializer = FriendSerializer(queryset, many=True)
-  #   return Response(serializer.data)
-
-  # @action(detail=True, methods=['get'])
-  # def list_requests(self, request, pk=None):
-  #   queryset = Friend.objects.unread_requests(request.user)
-  #   serializer = FriendSerializer(queryset, many=True)
-  #   return Response(serializer.data)
-
-  # @action(detail=True, methods=['post'])
-  # def make_request(self, request, pk=None):
-  #   other_user = User.objects.get(pk=1)
-  #   serializer = FriendSerializer(data=request.data)
-
-  #   if serializer.is_valid():
-  #     serializer.save()
-  #     return Response(serializer.data)
-  #   return Response(serializer.errors)
-
-
-
-  # https://github.com/revsys/django-friendship/blob/master/friendship/views.py
