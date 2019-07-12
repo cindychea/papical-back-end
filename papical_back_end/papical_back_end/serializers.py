@@ -26,6 +26,7 @@ class HangoutSerializer(TaggitSerializer, serializers.ModelSerializer):
     model = Hangout
     fields = ('pk', 'name', 'date', 'start_time', 'end_time', 'description', 'creator', 'location', 'tag')
 
+
 class FreeTimeSerializer(serializers.ModelSerializer):
 
   creator = serializers.ReadOnlyField(source='creator.username')
@@ -36,6 +37,7 @@ class FreeTimeSerializer(serializers.ModelSerializer):
   class Meta:
     model = FreeTime
     fields = ('pk', 'date', 'start_time', 'end_time', 'available', 'creator')
+
 
 class InvitationSerializer(serializers.ModelSerializer):
 
@@ -48,21 +50,45 @@ class InvitationSerializer(serializers.ModelSerializer):
     model = Invitation
     fields = ('pk', 'creator', 'invitee', 'hangout', 'attending')
 
+
 class TagSerializer(serializers.ModelSerializer):
 
   class Meta:
     model = Tag
     fields = ('pk', 'name', 'slug')
 
+
 class FriendSerializer(serializers.ModelSerializer):
+  from_user = UserSerializer()
+  to_user = UserSerializer()
 
   class Meta:
     model = Friend
     fields = ('pk', 'to_user', 'from_user', 'created')
+
 
 class FriendshipRequestSerializer(serializers.ModelSerializer):
 
   class Meta:
     model = FriendshipRequest
     fields = ('pk', 'from_user', 'to_user', 'message', 'created', 'rejected', 'viewed')
+
+
+
+    # {
+    #   pk: 2,
+    #   message: "adsfasdfasdf",
+    #   created: "",
+    #   rejected: "",
+    #   from_user: {
+    #     id: 1,
+    #     name: "Jasmin",
+    #     email: "asdfasd@#adsfadsf"
+    #   },
+    #   to_user: {
+    #     id: 2,
+    #     name: "Cindy",
+    #     email: "asdfasd@#adsfadsf"
+    #   },
+    # }
 

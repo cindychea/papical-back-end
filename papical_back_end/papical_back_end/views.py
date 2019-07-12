@@ -18,9 +18,10 @@ class UserViewSet(viewsets.ModelViewSet):
   queryset = User.objects.all()
   permission_classes = (permissions.IsAuthenticated,)
   
-  # def list(self, request):
-  #   # List
-  #   pass
+  def list(self, request):
+    queryset = User.objects.filter(Q(username=request.user.username)).all()
+    serializer = UserSerializer(queryset, many=True)
+    return Response(serializer.data)
 
   # def create(self, request):
   #   pass
