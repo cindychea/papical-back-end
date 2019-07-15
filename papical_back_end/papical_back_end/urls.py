@@ -22,6 +22,9 @@ from rest_framework import routers
 from rest_framework_simplejwt import views as jwt_views
 
 from papical_back_end import views
+from django.conf import settings
+from django.conf.urls.static import static
+
 
 
 router = routers.DefaultRouter()
@@ -42,5 +45,8 @@ urlpatterns = [
     path('login/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
 ]
+
+if settings.DEBUG:
+  urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # urlpatterns = format_suffix_patterns(urlpatterns)
