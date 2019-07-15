@@ -37,7 +37,6 @@ router.register(r'friends', views.FriendViewSet)
 router.register(r'requests', views.FriendRequestViewSet)
 
 
-
 urlpatterns = [
     path('', include(router.urls)),
     path('admin/', admin.site.urls),

@@ -16,7 +16,7 @@ class User(AbstractUser):
 
   email = models.EmailField(unique=True)
   date_of_birth = models.DateField(null=True, blank=True)
-  gender = models.CharField(max_length=2, choices=GENDER_CHOICES)
+  gender = models.CharField(max_length=2, choices=GENDER_CHOICES, null=True, blank=True)
   location = PointField(null=True, blank=True)
   tag = TaggableManager(verbose_name="Interests", help_text="Separate each interest with a comma.", blank=True)
   picture = models.ImageField(upload_to='images/', null=True, blank=True)
