@@ -1,23 +1,29 @@
 from rest_framework import serializers
-from papical_back_end.models import User, UserProfile, Hangout, FreeTime, Invitation
+from django.contrib.auth.hashers import make_password
+from papical_back_end.models import User, Hangout, FreeTime, Invitation
 from taggit.models import Tag
 from taggit_serializer.serializers import TagListSerializerField, TaggitSerializer
 from friendship.models import Friend, FriendshipRequest
 
 
 class UserSerializer(serializers.ModelSerializer):
-
-  class Meta:
-    model = User
-    fields = ('pk', 'username', 'first_name', 'last_name', 'email', 'date_of_birth', 'gender', 'location', 'tag', 'picture')
-
-class UserProfileSerializer(TaggitSerializer, serializers.ModelSerializer):
-
+  
   tag = TagListSerializerField()
 
   class Meta:
-    model = UserProfile
-    fields = ('pk', 'username', 'first_name', 'last_name', 'email', 'date_of_birth', 'gender', 'location', 'tag', 'picture')
+    model = User
+    fields = ('pk', 'username', 'first_name', 'last_name', 'email', 'password', 'date_of_birth', 'gender', 'location', 'tag', 'picture')
+
+  # validate_password = make_password(password)
+  def validate_password(self, value: str) -> str:
+    """
+    Hash value passed by user.
+
+    :param value: password of a user
+    :return: a hashed version of the password
+    """
+    return make_password(value)
+
 
 class HangoutSerializer(TaggitSerializer, serializers.ModelSerializer):
 

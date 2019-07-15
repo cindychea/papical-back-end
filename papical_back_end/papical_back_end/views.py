@@ -10,7 +10,6 @@ from taggit_serializer.serializers import TaggitSerializer
 from taggit.models import Tag
 from friendship.models import Friend, FriendshipRequest
 from papical_back_end.serializers import UserSerializer, HangoutSerializer, FreeTimeSerializer, InvitationSerializer, TagSerializer, FriendSerializer, FriendshipRequestSerializer
-
 from django.db.models import Q
 
 

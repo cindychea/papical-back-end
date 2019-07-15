@@ -6,22 +6,15 @@ from taggit.managers import TaggableManager
 
 
 class User(AbstractUser):
-  email = models.EmailField(unique=True)
-
-  def __str__(self):
-    return f'{self.first_name} {self.last_name}'
-
-
-class UserProfile(models.Model):
 
   GENDER_CHOICES = [
-  ('M', 'Male'),
-  ('F', 'Female'),
-  ('NB', 'Non-Binary'),
-  ('PN', 'Prefer not to say')
+    ('M', 'Male'),
+    ('F', 'Female'),
+    ('NB', 'Non-Binary'),
+    ('PN', 'Prefer not to say')
   ]
 
-  user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='profile')
+  email = models.EmailField(unique=True)
   date_of_birth = models.DateField(null=True, blank=True)
   gender = models.CharField(max_length=2, choices=GENDER_CHOICES, null=True, blank=True)
   location = PointField(null=True, blank=True)
@@ -29,7 +22,7 @@ class UserProfile(models.Model):
   picture = models.ImageField(upload_to='images/', null=True, blank=True)
 
   def __str__(self):
-    return f'User profile for {self.user}'
+    return f'{self.first_name} {self.last_name}'
 
 
 class Hangout(models.Model):
