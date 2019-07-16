@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.contrib.gis.db.models import PointField
-# from datetime import datetime, timedelta
 from taggit.managers import TaggableManager
 
 
@@ -17,7 +16,7 @@ class User(AbstractUser):
   email = models.EmailField(unique=True)
   date_of_birth = models.DateField(null=True, blank=True)
   gender = models.CharField(max_length=2, choices=GENDER_CHOICES, null=True, blank=True)
-  location = PointField(null=True, blank=True)
+  location = models.CharField(max_length=255, null=True, blank=True)
   tag = TaggableManager(verbose_name="Interests", help_text="Separate each interest with a comma.", blank=True)
   picture = models.ImageField(upload_to='images/', null=True, blank=True)
 
@@ -26,13 +25,20 @@ class User(AbstractUser):
 
 
 class Hangout(models.Model):
+
+  ALL_DAY = [
+    ('Y', 'Yes'),
+    ('N', 'No'),
+  ]
+
   name = models.CharField(max_length=255)
   date = models.DateField()
+  all_day = models.CharField(max_length=1, choices=ALL_DAY)
   start_time = models.TimeField()
   end_time = models.TimeField()
   description = models.TextField(null=True)
   creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_hangouts')
-  location = PointField(null=True, blank=True)
+  location = models.CharField(max_length=255, null=True, blank=True)
   tag = TaggableManager(verbose_name="Tags", help_text="Separate each tag with a comma.", blank=True)
 
   def __str__(self):
