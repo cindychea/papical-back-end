@@ -40,8 +40,9 @@ class FreeTimeSerializer(serializers.ModelSerializer):
 
 
 class InvitationSerializer(serializers.ModelSerializer):
-
   creator = serializers.ReadOnlyField(source='creator.username')
+  hangout = HangoutSerializer()
+  invitee = UserSerializer()
 
   def perform_create(self, serializer):
     serializer.save(creator=self.request.user)
