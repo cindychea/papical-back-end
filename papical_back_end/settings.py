@@ -82,6 +82,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'papical_back_end.wsgi.application'
 
+GDAL_LIBRARY_PATH = os.environ.get('GDAL_LIBRARY_PATH')
+GEOS_LIBRARY_PATH = os.environ.get('GEOS_LIBRARY_PATH')
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
