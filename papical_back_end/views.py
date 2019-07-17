@@ -49,7 +49,8 @@ class UserViewSet(viewsets.ModelViewSet):
 class HangoutViewSet(viewsets.ModelViewSet):
   serializer_class = HangoutSerializer
   queryset = Hangout.objects.all()
-  permission_classes = (permissions.IsAuthenticated, )
+  permission_classes = (permissions.AllowAny, )
+  # permission_classes = (permissions.IsAuthenticated,)
   
   # def list(self, request):
   #   # List
@@ -76,7 +77,8 @@ class HangoutViewSet(viewsets.ModelViewSet):
 class FreeTimeViewSet(viewsets.ModelViewSet):
   serializer_class = FreeTimeSerializer
   queryset = FreeTime.objects.all()
-  permission_classes = (permissions.IsAuthenticated,)
+  permission_classes = (permissions.AllowAny, )
+  # permission_classes = (permissions.IsAuthenticated,)
   
   # def list(self, request):
   #   # List
@@ -103,7 +105,8 @@ class FreeTimeViewSet(viewsets.ModelViewSet):
 class InvitationViewSet(viewsets.ModelViewSet):
   serializer_class = InvitationSerializer
   queryset = Invitation.objects.all()
-  permission_classes = (permissions.IsAuthenticated,)
+  permission_classes = (permissions.AllowAny, )
+  # permission_classes = (permissions.IsAuthenticated,)
   
   # def list(self, request):
   #   # List
@@ -130,7 +133,8 @@ class InvitationViewSet(viewsets.ModelViewSet):
 class TagViewSet(viewsets.ModelViewSet):
   serializer_class = TagSerializer
   queryset = Tag.objects.all()
-  permission_classes = (permissions.IsAuthenticated,)
+  permission_classes = (permissions.AllowAny, )
+  # permission_classes = (permissions.IsAuthenticated,)
   
   # def list(self, request):
   #   # List
@@ -157,7 +161,8 @@ class TagViewSet(viewsets.ModelViewSet):
 class FriendViewSet(viewsets.ModelViewSet):
   serializer_class = FriendSerializer
   queryset = Friend.objects.all()
-  permission_classes = (permissions.IsAuthenticated, )
+  permission_classes = (permissions.AllowAny, )
+  # permission_classes = (permissions.IsAuthenticated, )
   
   def list(self, request):
     queryset = Friend.objects.filter(Q(from_user=request.user) | Q(to_user=request.user)).all()
@@ -173,7 +178,8 @@ class FriendViewSet(viewsets.ModelViewSet):
 class FriendRequestViewSet(viewsets.ModelViewSet):
   serializer_class = FriendshipRequestSerializer
   queryset = FriendshipRequest.objects.all()
-  permission_classes = (permissions.IsAuthenticated, )
+  permission_classes = (permissions.AllowAny, )
+  # permission_classes = (permissions.IsAuthenticated, )
 
   def list(self, request):
     queryset = FriendshipRequest.objects.filter(Q(from_user=request.user) | Q(to_user=request.user)).all()
