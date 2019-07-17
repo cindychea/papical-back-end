@@ -79,13 +79,26 @@ class FreeTimeViewSet(viewsets.ModelViewSet):
   queryset = FreeTime.objects.all()
   permission_classes = (permissions.AllowAny, )
   # permission_classes = (permissions.IsAuthenticated,)
+
+  # def get_serializer_context(self):
+  #   return {'request': self.request}
+
+  def get_serializer_context(self):
+    """
+    pass request attribute to serializer
+    """
+    context = super(FreeTimeViewSet, self).get_serializer_context()
+    return context
   
   # def list(self, request):
   #   # List
   #   pass
 
-  # def create(self, request):
-  #   pass
+  def create(self, request):
+
+  #   creator =  self.context['request'].user
+  #   serializer.save(creator=creator)
+    pass
 
   # def retrieve(self, request, pk=None):
   #   # Detail

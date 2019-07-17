@@ -1,9 +1,14 @@
 from rest_framework import serializers
+from rest_framework.fields import CurrentUserDefault
 from django.contrib.auth.hashers import make_password
 from papical_back_end.models import User, Hangout, FreeTime, Invitation
 from taggit.models import Tag
 from taggit_serializer.serializers import TagListSerializerField, TaggitSerializer
 from friendship.models import Friend, FriendshipRequest
+
+import logging
+logger = logging.getLogger(__name__)
+
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -41,9 +46,14 @@ class HangoutSerializer(TaggitSerializer, serializers.ModelSerializer):
 class FreeTimeSerializer(serializers.ModelSerializer):
 
   creator = serializers.ReadOnlyField(source='creator.username')
+  
 
-  def perform_create(self, serializer):
-    serializer.save(creator=self.request.user)
+  # def perform_create(self, serializer):
+  #   creator =  self.context['request'].user
+  #   serializer.save(creator=creator)
+  #   return creator
+
+  # creator = serializers.HiddenField(default=self.context['request'].user)
 
   class Meta:
     model = FreeTime
@@ -84,23 +94,3 @@ class FriendshipRequestSerializer(serializers.ModelSerializer):
   class Meta:
     model = FriendshipRequest
     fields = ('pk', 'from_user', 'to_user', 'message', 'created', 'rejected', 'viewed')
-
-
-
-    # {
-    #   pk: 2,
-    #   message: "adsfasdfasdf",
-    #   created: "",
-    #   rejected: "",
-    #   from_user: {
-    #     id: 1,
-    #     name: "Jasmin",
-    #     email: "asdfasd@#adsfadsf"
-    #   },
-    #   to_user: {
-    #     id: 2,
-    #     name: "Cindy",
-    #     email: "asdfasd@#adsfadsf"
-    #   },
-    # }
-
