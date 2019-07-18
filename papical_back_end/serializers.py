@@ -35,8 +35,8 @@ class HangoutSerializer(TaggitSerializer, serializers.ModelSerializer):
   tag = TagListSerializerField()
   creator = serializers.ReadOnlyField(source='creator.username')
 
-  def perform_create(self, serializer):
-    serializer.save(creator=self.request.user)
+  # def perform_create(self, serializer):
+  #   serializer.save(creator=self.request.user)
 
   class Meta:
     model = Hangout
@@ -45,15 +45,26 @@ class HangoutSerializer(TaggitSerializer, serializers.ModelSerializer):
 
 class FreeTimeSerializer(serializers.ModelSerializer):
 
-  creator = serializers.ReadOnlyField(source='creator.username')
+  # creator = serializers.HiddenField(default=CurrentUserDefault())
+  # creator = serializers.PrimaryKeyRelatedField(read_only=True, default=serializers.CurrentUserDefault().username)
   
+  # creator = serializers.ReadOnlyField(source=)
+ 
+  # creator = UserSerializer()
+  # creator = serializers.PrimaryKeyRelatedField(
+  #       required=False,
+  #       read_only=True,
+  #       default=serializers.CurrentUserDefault())
 
-  # def perform_create(self, serializer):
-  #   creator =  self.context['request'].user
-  #   serializer.save(creator=creator)
-  #   return creator
-
-  # creator = serializers.HiddenField(default=self.context['request'].user)
+  # def create(self, validated_data):
+  #       """Override ``create`` to provide a user via request.user by default.
+  #       This is required since the read_only ``user`` field is not included by
+  #       default anymore since
+  #       https://github.com/encode/django-rest-framework/pull/5886.
+  #       """
+  #       if 'creator' not in validated_data:
+  #           validated_data['creator'] = self.context['request'].user
+  #       return super(FreeTimeSerializer, self).create(validated_data)
 
   class Meta:
     model = FreeTime
