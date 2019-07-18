@@ -87,12 +87,22 @@ class FreeTimeViewSet(viewsets.ModelViewSet):
   #   context = super(FreeTimeViewSet, self).get_serializer_context()
   #   return context
 
-  # def perform_create(self, serializer):
-  #   serializer.save(creator=self.request.user)
+  # def perform_create(self, request, serializer):
+  #   serializer = FreeTimeSerializer(queryset, many=False)
+  #   # queryset = User.objects.get(pk=request['creator']
+  #   # serializer = FreeTimeSerializer(queryset, many=False)
+  #   serializer.save(creator=User.objects.get(pk=request['creator']))
 
   # def get_serializer_context(self):
   #   return {'request': self.request}
 
+  # def create(self, request):
+  #   # to_user = user_model.objects.get(username=to_username)
+  #   newFreetime = FreeTime.objects.create()
+  #   newFreetime.creator = request['creator']
+  #   newFreetime.save()
+  #   # serializer = FriendshipRequestSerializer(queryset, many=True)
+  #   return Response({'status': 'Request sent'}, status=200)
   
   # def list(self, request):
   #   # List
